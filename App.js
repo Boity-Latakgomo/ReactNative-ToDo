@@ -1,8 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
 import { Entypo, MaterialIcons  } from '@expo/vector-icons';
 
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    todo: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    todo: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    todo: 'Third Item',
+  },
+];
+
 export default function App() {
+
+  const renderItem = ({ item }) => {
+    
+    return <View style={styles.listItemView}>
+          <Text style={styles.listItemText}>{item.todo}</Text>
+          <View style={styles.editDeleteView}>
+          <Entypo style={styles.actionButton} name="edit" size={24} color="blue" />
+          <MaterialIcons style={styles.actionButton} name="delete" size={24} color="blue" />
+          </View>
+        </View>
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.addToDoView}>
@@ -12,13 +39,12 @@ export default function App() {
         </View>
       </View>
       <View style={styles.listView}>
-        <View style={styles.listItemView}>
-          <Text style={styles.listItemText}>Practice Maths</Text>
-          <View style={styles.editDeleteView}>
-          <Entypo style={styles.actionButton} name="edit" size={24} color="blue" />
-          <MaterialIcons style={styles.actionButton} name="delete" size={24} color="blue" />
-          </View>
-        </View>
+
+
+      <FlatList data={DATA} renderItem={renderItem} keyExtractor={item => item.id} />
+
+        
+
       </View>
     </View>
   );
